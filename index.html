@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Tester</title>
+</head>
+<body>
+    <div>
+        <h1>Test your API endpoint</h1>
+        <h2>Remember to disable CORS</h2>
+        <label for="apiUrl">API URL:</label><input id="apiUrl" type="text">
+        <label for="apiBody">API Body:</label><input id="apiBody" type="text">
+        <div>
+            <label for="apiTypeGet">Get</label><input id="apiTypeGet" type="radio" name="type" value="GET">
+            <label for="apiTypePut">Post</label><input id="apiTypePut" type="radio" name="type" value="POST">
+        </div>
+        <button id="submit-button">Call API</button>
+        <p id="response-display"></p>
+    </div>
+    <script>
+        document.getElementById("submit-button").addEventListener("click", function(){
+            url = document.getElementById("apiUrl").value
+            apiBody = document.getElementById("apiBody").value
+            requestType = document.querySelector('input[name="type"]:checked').value;
+
+            fetch(url, {
+                method: requestType,
+                body: apiBody,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(async response => {
+                let data = await response.text()
+                document.getElementById("response-display").innerText = data
+            })
+        })
+    </script>
+</body>
+</html>
